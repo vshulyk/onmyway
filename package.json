@@ -37,6 +37,7 @@
     "react-leaflet": "^0.12.2",
     "react-redux": "^4.0.0",
     "react-router": "^2.0.1",
-    "redux": "^3.0.4"
+    "redux": "^3.0.4",
+    "uuid": "^2.0.2"
   }
 }

@@ -6,6 +6,6 @@ import Map from './components/map';
 
 export default (
 	<Route path="/" component={App}>
-		<Route path="map" component={Map} />
+		<Route path="map/:teamId" component={Map} />
 	</Route>
 );

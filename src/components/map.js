@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 class TrackingMap extends Component {
     componentDidMount(){
         var _this = this;
-
+        console.log('Map was initialized for: ', this.props.params.teamId, ' team id.');
         // get initial coords
         navigator.geolocation.getCurrentPosition(function(position) {
             _this.GPSupdate.call(_this, position);
@@ -57,7 +57,8 @@ class TrackingMap extends Component {
 
 TrackingMap.propTypes = {
     changeCoords: React.PropTypes.func,
-    gps: React.PropTypes.object
+    gps: React.PropTypes.object,
+    params: React.PropTypes.object
 };
 
 function mapStateToProps(state) {
