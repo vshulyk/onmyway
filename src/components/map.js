@@ -6,6 +6,7 @@ import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import { changeCoords } from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import Chat from './chat';
 
 class TrackingMap extends Component {
     componentDidMount(){
@@ -22,12 +23,19 @@ class TrackingMap extends Component {
     }
 
     GPSupdate(e){
-        console.log('this.props', this);
         const coords = {
             lat: _.get(e, 'coords.latitude'),
             lng: _.get(e, 'coords.longitude')
         };
         this.props.changeCoords(coords);
+    }
+
+    teamMarkers(){
+        var _this = this;
+        return Object.keys(_this.props.team).map(function(memberKey, i){
+            var member = _this.props.team[memberKey];
+            return <Marker position={[member.lat, member.lng]} key={i} />;
+        });
     }
 
     map(){
@@ -38,17 +46,14 @@ class TrackingMap extends Component {
         return (<Map center={[this.props.gps.lat, this.props.gps.lng]} zoom={18}>
             <TileLayer
                 url={tileURL} />
-            <Marker position={[this.props.gps.lat, this.props.gps.lng]}>
-                <Popup>
-                    <span>Your position</span>
-                </Popup>
-            </Marker>
+            <Marker position={[this.props.gps.lat, this.props.gps.lng]} />
+            {this.teamMarkers()}
         </Map>);
     }
     render() {
-        console.log('render');
         return (
             <div>
+                <Chat teamId={this.props.params.teamId}/>
                 <div className="map">{this.map()}</div>
             </div>
         );
@@ -63,7 +68,8 @@ TrackingMap.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        gps: state.gps
+        gps: state.gps,
+        team: state.team
     };
 }
 

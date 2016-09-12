@@ -21,7 +21,7 @@ const initialData = {
 };
 
 ReactDOM.render(
-  <Provider store={createStoreWithMiddleware(reducers, initialData)}>
+  <Provider store={createStoreWithMiddleware(reducers, initialData, window.devToolsExtension && window.devToolsExtension())}>
     <Router history={hashHistory} routes={routes} />
   </Provider>
   , document.querySelector('.container'));
