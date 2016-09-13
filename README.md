@@ -11,4 +11,6 @@ https://localhost:3090 and accept this one**
 	> cd ReduxSimpleStarter
 	> npm install
 	> npm start
+	> cd server
+	> node index.js
 ```
