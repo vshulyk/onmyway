@@ -2,7 +2,8 @@
 
 import {
   CHANGE_COORDS,
-  CHANGE_TEAM_COORDS
+  CHANGE_TEAM_COORDS,
+  AUTHENTICATE
 } from './types';
 
 
@@ -19,5 +20,12 @@ export function changeTeamCoords(payload) {
     return {
         type: CHANGE_TEAM_COORDS,
         payload: newPayload
+    };
+}
+
+export function authenticate( status ) {
+    return {
+        type: AUTHENTICATE,
+        payload: status
     };
 }
