@@ -7,21 +7,14 @@ import { authenticate } from '../actions';
 import { bindActionCreators } from 'redux';
 
 class Auth extends Component {
-		constructor() {
-			super();
-			this.onSignBtnClick = this.onSignBtnClick.bind(this);
-		}
-		onSignBtnClick() {
-			this.props.authenticate( !this.props.authenticated )
-		}
 		renderSignBtn() {
 			if ( this.props.authenticated ) {
 				return (
-				  <button type="button" className="btn btn-default" onClick={this.onSignBtnClick}>SignOut</button>
+				  <button type="button" className="btn btn-default" onClick={() => this.props.authenticate( false )}>SignOut</button>
 			  );
 			}
 			return (
-			  <button type="button" className="btn btn-default" onClick={this.onSignBtnClick}>SignIn</button>
+			  <button type="button" className="btn btn-default" onClick={() => this.props.authenticate( true )}>SignIn</button>
 		  );
 		}
     render() {
