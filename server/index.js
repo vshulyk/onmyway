@@ -22,26 +22,27 @@ app.use(bodyParser.json({ type: '*/*' }));
 // Server Setup
 const port = process.env.PORT || 3090;
 const server = https.createServer({key: key, cert: cert}, app);
-var io = require('socket.io')(server);
+var io = require('socket.io')(server),
+    pub = redis.createClient()
+    redisClient = redis.createClient(),
+    subClients = {},
+    subCounts = {};
 
 io.on('connection', function(socket){
     console.log('user connected');
-    var sub = redis.createClient(),
-        pub = redis.createClient(),
-        currentChannel = 'default';
+    var currentChannel = 'default',
+        currentUserId = null;
 
-    sub.on('message', function (channel, message) {
-        // console.log("message from redis channel " + channel + ": " + message);
-        var parsedMessage = JSON.parse(message);
-        if (parsedMessage.clientId !== socket.id) {
-            socket.emit('chat message', parsedMessage.message );
-        }
-    });
 
     socket.on('disconnect', function(){
         console.log('user disconnected');
-        pub.quit();
-        sub.quit();
+        subCounts[currentChannel]--;
+        console.log('counts', subCounts[currentChannel])
+        if (subCounts[currentChannel]<=0){
+            console.log('no listeners in sub, closing...')
+            subClients[currentChannel].quit();
+            delete subClients[currentChannel];
+        }
     });
 
     socket.on('chat message', function(msg){
@@ -49,11 +50,34 @@ io.on('connection', function(socket){
         switch(msg.action) {
         case 'connect':
             currentChannel = msg.payload.teamId;
-            sub.subscribe(currentChannel);
+            if (!(currentChannel in subClients)){
+                subClients[currentChannel] = redis.createClient();
+                subCounts[currentChannel] = 1;
+            } else {
+                subCounts[currentChannel]++;
+            }
+            console.log('counts', subCounts[currentChannel])
+            subClients[currentChannel].on('message', function (channel, message) {
+                // console.log("message from redis channel " + channel + ": " + message);
+                var parsedMessage = JSON.parse(message);
+                if (parsedMessage.clientId !== socket.id) {
+                    socket.emit('chat message', parsedMessage.message );
+                }
+            });
+            currentUserId = msg.payload.userId;
+            subClients[currentChannel].subscribe(currentChannel);
+            redisClient.hgetallAsync('MEMBERS:' + currentChannel)
+                .then(function(members){
+                    Object.keys(members).forEach(function(mKey){
+                        if ( mKey !== currentUserId ) {
+                            socket.emit('chat message', JSON.parse(members[mKey]) );
+                        }
+                    })
+                })
             break;
         case 'changeCoords':
-            // console.log('change coordsm emit??')
             pub.publish(currentChannel, JSON.stringify({ message: msg, clientId: socket.id}));
+            redisClient.hset('MEMBERS:' + currentChannel, msg.payload.userId, JSON.stringify(msg))
             break;
 
         default:
