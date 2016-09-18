@@ -7,6 +7,6 @@ import require_auth from './components/require_auth';
 
 export default (
 	<Route path="/" component={App}>
-		<Route path="map/:teamId" component={require_auth(Map)} />
+		<Route path="map/:teamId" component={Map} />
 	</Route>
 );

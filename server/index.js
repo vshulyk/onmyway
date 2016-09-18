@@ -68,11 +68,12 @@ io.on('connection', function(socket){
             subClients[currentChannel].subscribe(currentChannel);
             redisClient.hgetallAsync('MEMBERS:' + currentChannel)
                 .then(function(members){
-                    Object.keys(members).forEach(function(mKey){
-                        if ( mKey !== currentUserId ) {
-                            socket.emit('chat message', JSON.parse(members[mKey]) );
-                        }
-                    })
+                    if (members)
+                        Object.keys(members).forEach(function(mKey){
+                            if ( mKey !== currentUserId ) {
+                                socket.emit('chat message', JSON.parse(members[mKey]) );
+                            }
+                        })
                 })
             break;
         case 'changeCoords':
