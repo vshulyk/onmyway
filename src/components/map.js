@@ -7,6 +7,7 @@ import { changeCoords } from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Chat from './chat';
+import { icon } from 'leaflet';
 
 class TrackingMap extends Component {
     componentDidMount(){
@@ -31,11 +32,25 @@ class TrackingMap extends Component {
     }
 
     teamMarkers(){
-        var _this = this;
+        var _this = this,
+            teamIcon = icon({
+                iconUrl: '/img/baby.png'
+            });
         return Object.keys(_this.props.team).map(function(memberKey, i){
             var member = _this.props.team[memberKey];
-            return <Marker position={[member.lat, member.lng]} key={i} />;
+            return <Marker position={[member.lat, member.lng]} key={i} icon={teamIcon} />;
         });
+    }
+
+    getBounds(){
+        var bounds = [],
+            _this = this;
+        bounds.push([this.props.gps.lat, this.props.gps.lng]);
+        Object.keys(_this.props.team).map(function(memberKey, i){
+            var member = _this.props.team[memberKey];
+            bounds.push([member.lat, member.lng])
+        });
+        return bounds;
     }
 
     map(){
@@ -43,10 +58,18 @@ class TrackingMap extends Component {
             'michae1.0jk7gngp' + '/{z}/{x}/{y}.png?access_token=' +
             'pk.eyJ1IjoibWljaGFlMSIsImEiOiJjaXFjZGdqNzUwMDQzaHNuaG55bXN5cHFsIn0.naFQmh7kn9ck9cX_TcH92w';
 
-        return (<Map center={[this.props.gps.lat, this.props.gps.lng]} zoom={18}>
+        var myIcon = icon({
+            iconUrl: '/img/oldman.png'
+        });
+            
+        return (<Map 
+            center={[this.props.gps.lat, this.props.gps.lng]} 
+            zoom={18} 
+            bounds={this.getBounds()}
+            boundsOptions={{padding: [50, 50]}}>
             <TileLayer
                 url={tileURL} />
-            <Marker position={[this.props.gps.lat, this.props.gps.lng]} />
+            <Marker position={[this.props.gps.lat, this.props.gps.lng]} icon={myIcon} />
             {this.teamMarkers()}
         </Map>);
     }
