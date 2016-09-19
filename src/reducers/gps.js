@@ -8,7 +8,7 @@ import {
 export function GPSReducer(state = {}, action) {
     switch(action.type) {
     case CHANGE_COORDS:
-        return Object.assign({}, action.payload);
+        return Object.assign({}, action.payload, {prev: state});
     default:
         return state;
     }

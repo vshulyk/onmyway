@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Chat from './chat';
 import { icon } from 'leaflet';
+import geolib from 'geolib';
+import config from '../config';
 
 class TrackingMap extends Component {
     componentDidMount(){
@@ -28,7 +30,17 @@ class TrackingMap extends Component {
             lat: _.get(e, 'coords.latitude'),
             lng: _.get(e, 'coords.longitude')
         };
-        this.props.changeCoords(coords);
+        if (this.props.gps.prev){ // We need no track move less than X meters (to avoid gps glitches etc)
+            var distanse = geolib.getDistance(
+                 {latitude: this.props.gps.prev.lat, longitude: this.props.gps.prev.lng},
+                 {latitude: coords.lat, longitude: coords.lng}
+            );
+            if (distanse > config.gps.treshold){
+                this.props.changeCoords(coords);
+            }
+        } else {
+            this.props.changeCoords(coords);
+        }
     }
 
     teamMarkers(){

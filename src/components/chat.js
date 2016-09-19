@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import io from 'socket.io-client';
 import uuid from 'uuid';
+import config from '../config';
 
 class Chat extends Component {
 
@@ -18,7 +19,7 @@ class Chat extends Component {
             localStorage.setItem('uuid', this.uuid);
         }
 
-        this.socket = io.connect('https://localhost:3090', {secure: true, port: 3090});
+        this.socket = io.connect(config.chat.server, {secure: true, port: 3090});
         this.socket.emit('chat message', { action: 'connect', payload: {teamId: this.props.teamId, userId: this.uuid, timestamp: Date.now()} });
         this.socket.on('chat message', function(msg){
             switch(msg.action) {
