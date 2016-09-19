@@ -10,38 +10,38 @@ import uuid from 'uuid';
 import config from '../config';
 
 class Chat extends Component {
-
     componentDidMount(){
-        var _this = this;
+        var _this = this,
+            serverCfg = config.chat.server,
+            serverUrl = serverCfg.url + ':' + serverCfg.port;
+
         this.uuid = localStorage.getItem('uuid');
         if (!this.uuid){
             this.uuid = uuid.v4();
             localStorage.setItem('uuid', this.uuid);
         }
 
-        this.socket = io.connect(config.chat.server, {secure: true, port: 3090});
+        this.socket = io.connect(serverUrl, {secure: true, port: serverCfg.port});
         this.socket.emit('chat message', { action: 'connect', payload: {teamId: this.props.teamId, userId: this.uuid, timestamp: Date.now()} });
         this.socket.on('chat message', function(msg){
             switch(msg.action) {
-            case 'connect':
-                console.log('user connected:', msg.payload.userId);
-                break;
-            case 'changeCoords': {
-                _this.props.changeTeamCoords(msg.payload);
-                break;
-            }
-            default:
-                return false;
+                case 'connect':
+                    console.log('user connected:', msg.payload.userId);
+                    break;
+                case 'changeCoords':
+                    _this.props.changeTeamCoords(msg.payload);
+                    break;
+                default:
+                    return false;
             }
         });
     }
     componentWillReceiveProps(nextProps){
         this.socket.emit('chat message', {action: 'changeCoords', payload: Object.assign(nextProps.gps, {userId: this.uuid, timestamp: Date.now()}) });
     }
-
     render() {
         return (
-            <div/>
+            <div />
         );
     }
 }

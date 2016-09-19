@@ -1,13 +1,13 @@
 'use strict';
 
 import React, {Component} from 'react';
-import Auth from './auth';
+import Menu from './menu';
 
 export default class App extends Component {
     render() {
         return (
-        	<div>
-        		<Auth />
+        	<div className="wrapper">
+        		<Menu />
         		{this.props.children}
         	</div>
         );

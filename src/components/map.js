@@ -31,11 +31,11 @@ class TrackingMap extends Component {
             lng: _.get(e, 'coords.longitude')
         };
         if (this.props.gps.prev){ // We need no track move less than X meters (to avoid gps glitches etc)
-            var distanse = geolib.getDistance(
+            var distance = geolib.getDistance(
                  {latitude: this.props.gps.prev.lat, longitude: this.props.gps.prev.lng},
                  {latitude: coords.lat, longitude: coords.lng}
             );
-            if (distanse > config.gps.treshold){
+            if (distance > config.gps.treshold){
                 this.props.changeCoords(coords);
             }
         } else {
@@ -46,11 +46,11 @@ class TrackingMap extends Component {
     teamMarkers(){
         var _this = this,
             teamIcon = icon({
-                iconUrl: '/img/baby.png'
+                iconUrl: '/img/u.png'
             });
         return Object.keys(_this.props.team).map(function(memberKey, i){
             var member = _this.props.team[memberKey];
-            return <Marker position={[member.lat, member.lng]} key={i} icon={teamIcon} />;
+            return <Marker position={[member.lat, member.lng]} key={i} icon={teamIcon} title="you" />;
         });
     }
 
@@ -66,30 +66,28 @@ class TrackingMap extends Component {
     }
 
     map(){
-        const tileURL = 'https://api.tiles.mapbox.com/v4/' +
-            'michae1.0jk7gngp' + '/{z}/{x}/{y}.png?access_token=' +
-            'pk.eyJ1IjoibWljaGFlMSIsImEiOiJjaXFjZGdqNzUwMDQzaHNuaG55bXN5cHFsIn0.naFQmh7kn9ck9cX_TcH92w';
+        const tileURL = config.map.url + 'michae1.0jk7gngp' + '/{z}/{x}/{y}.png?access_token=' + config.map.token;
 
         var myIcon = icon({
-            iconUrl: '/img/oldman.png'
+            iconUrl: '/img/i.png'
         });
             
-        return (<Map 
-            center={[this.props.gps.lat, this.props.gps.lng]} 
-            zoom={18} 
-            bounds={this.getBounds()}
-            boundsOptions={{padding: [50, 50]}}>
-            <TileLayer
-                url={tileURL} />
-            <Marker position={[this.props.gps.lat, this.props.gps.lng]} icon={myIcon} />
-            {this.teamMarkers()}
-        </Map>);
+        return (
+            <Map center={[this.props.gps.lat, this.props.gps.lng]} 
+                zoom={18} bounds={this.getBounds()}
+                boundsOptions={{padding: [50, 50]}}
+            >
+                <TileLayer url={tileURL} />
+                <Marker position={[this.props.gps.lat, this.props.gps.lng]} icon={myIcon} title="me" />
+                {this.teamMarkers()}
+            </Map>
+        );
     }
     render() {
         return (
-            <div>
-                <Chat teamId={this.props.params.teamId}/>
-                <div className="map">{this.map()}</div>
+            <div className="content-wrapper">
+                <Chat teamId={this.props.params.teamId} />
+                <div className="map" id="map">{this.map()}</div>
             </div>
         );
     }
