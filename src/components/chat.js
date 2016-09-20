@@ -13,7 +13,7 @@ class Chat extends Component {
     componentDidMount(){
         var _this = this,
             serverCfg = config.chat.server,
-            serverUrl = serverCfg.url + ':' + serverCfg.port;
+            serverUrl = serverCfg.url;
 
         this.uuid = localStorage.getItem('uuid');
         if (!this.uuid){
@@ -21,7 +21,7 @@ class Chat extends Component {
             localStorage.setItem('uuid', this.uuid);
         }
 
-        this.socket = io.connect(serverUrl, {secure: true, port: serverCfg.port});
+        this.socket = io.connect(serverUrl, {secure: true});
         this.socket.emit('chat message', { action: 'connect', payload: {teamId: this.props.teamId, userId: this.uuid, timestamp: Date.now()} });
         this.socket.on('chat message', function(msg){
             switch(msg.action) {

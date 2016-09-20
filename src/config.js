@@ -4,8 +4,8 @@ export default {
 	},
 	chat: {
 		server: { // WS server url
-			url: 'https://localhost',
-			port: 3090
+			url: 'https://localhost:3090'
+			// url: 'https://onmyway.ga'
 		} 
 	},
 	map: {

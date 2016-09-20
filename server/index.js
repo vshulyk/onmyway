@@ -1,18 +1,27 @@
 // Main starting point of the application
 const express = require('express');
-const https = require('https');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const app = express();
 const cors = require('cors');
 const bluebird = require('bluebird');
 const redis = require('redis');
+const config = require('./config');
+
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
 
 const fs = require('fs');
-const key = fs.readFileSync('../certs/track.key', 'utf8');
-const cert = fs.readFileSync('../certs/track.crt', 'utf8');
+
+const https = require('https');
+const http = require('http');
+
+let key, cert;
+
+if (config.ssl){
+    key = fs.readFileSync('../certs/track.key', 'utf8');
+    cert = fs.readFileSync('../certs/track.crt', 'utf8');
+}
 
 // App Setup
 app.use(morgan('combined'));
@@ -21,7 +30,14 @@ app.use(bodyParser.json({ type: '*/*' }));
 
 // Server Setup
 const port = process.env.PORT || 3090;
-const server = https.createServer({key: key, cert: cert}, app);
+let server;
+
+if (config.ssl){
+    server = https.createServer({key: key, cert: cert}, app);
+} else {
+    server = http.createServer(app);
+}
+
 var io = require('socket.io')(server),
     pub = redis.createClient()
     redisClient = redis.createClient(),
