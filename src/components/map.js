@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Chat from './chat';
 import { icon } from 'leaflet';
+import { divIcon } from 'leaflet';
 import geolib from 'geolib';
 import config from '../config';
 
@@ -45,8 +46,9 @@ class TrackingMap extends Component {
 
     teamMarkers(){
         var _this = this,
-            teamIcon = icon({
-                iconUrl: '/img/u.png'
+            teamIcon = divIcon({
+                className: 'vehicle-icon',
+                html: getIcon("/img/u.png", "Friend"),
             });
         return Object.keys(_this.props.team).map(function(memberKey, i){
             var member = _this.props.team[memberKey];
@@ -68,8 +70,9 @@ class TrackingMap extends Component {
     map(){
         const tileURL = config.map.url + 'michae1.0jk7gngp' + '/{z}/{x}/{y}.png?access_token=' + config.map.token;
 
-        var myIcon = icon({
-            iconUrl: '/img/i.png'
+        var myIcon = divIcon({
+            className: 'vehicle-icon',
+            html: getIcon("/img/i.png", "ME"),
         });
             
         return (
@@ -98,6 +101,10 @@ TrackingMap.propTypes = {
     gps: React.PropTypes.object,
     params: React.PropTypes.object
 };
+
+function getIcon(image, text){
+    return "<div>"+text+"<img src='"+image+"'/></div>";
+}
 
 function mapStateToProps(state) {
     return {

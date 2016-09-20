@@ -1,6 +1,6 @@
 export default {
 	gps: {
-		treshold: 25 // How much meters between notifications
+		treshold: 7 // How much meters between notifications
 	},
 	chat: {
 		server: { // WS server url
