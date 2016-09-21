@@ -51,8 +51,15 @@ class TrackingMap extends Component {
                 html: getIcon("/img/u.png", "Friend"),
             });
         return Object.keys(_this.props.team).map(function(memberKey, i){
-            var member = _this.props.team[memberKey];
-            return <Marker position={[member.lat, member.lng]} key={i} icon={teamIcon} title="you" />;
+            var member = _this.props.team[memberKey],
+                tIcon = teamIcon;
+            if ( !member.meta.status ) {
+                tIcon = divIcon({
+                className: 'vehicle-icon',
+                html: getIcon("/img/dead.png", "Disconnected friend"),
+            });
+            }
+            return <Marker className={status} position={[member.lat, member.lng]} key={i} icon={tIcon} title="you" />;
         });
     }
 

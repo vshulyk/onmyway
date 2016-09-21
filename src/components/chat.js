@@ -22,7 +22,11 @@ class Chat extends Component {
         }
 
         this.socket = io.connect(serverUrl, {secure: true});
-        this.socket.emit('chat message', { action: 'connect', payload: {teamId: this.props.teamId, userId: this.uuid, timestamp: Date.now()} });
+        this.socket.emit('chat message', { action: 'connect', payload: {
+            teamId: this.props.teamId, 
+            userId: this.uuid, 
+            timestamp: Date.now()
+        } });
         this.socket.on('chat message', function(msg){
             switch(msg.action) {
                 case 'connect':
@@ -37,7 +41,21 @@ class Chat extends Component {
         });
     }
     componentWillReceiveProps(nextProps){
-        this.socket.emit('chat message', {action: 'changeCoords', payload: Object.assign(nextProps.gps, {userId: this.uuid, timestamp: Date.now()}) });
+        var userData = Object.assign(
+            nextProps.gps, 
+            {
+                userId: this.uuid, 
+                timestamp: Date.now(),
+                meta: {
+                    status: 1
+                }
+            }
+        );
+        this.socket.emit('chat message', {action: 'changeCoords', payload: userData });
+    }
+    componentWillUnmount() {
+        this.socket.emit('chat message', {action: 'disconnect', payload: {userId: this.uuid, timestamp: Date.now()} });
+        this.socket.disconnect();
     }
     render() {
         return (
