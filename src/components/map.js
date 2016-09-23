@@ -12,7 +12,7 @@ import { divIcon } from 'leaflet';
 import geolib from 'geolib';
 import config from '../config';
 
-class TrackingMap extends Component {
+export class TrackingMap extends Component {
     componentDidMount(){
         var _this = this;
         console.log('Map was initialized for: ', this.props.params.teamId, ' team id.');
