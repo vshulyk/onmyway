@@ -1,6 +1,10 @@
 #### Developer help #####
 **!!!Please lint your code before commit!!!**
 
+Build status:
+
+[![CircleCI](https://circleci.com/bb/vshulyk/reduxmapdemo.svg?style=svg)](https://circleci.com/bb/vshulyk/reduxmapdemo)
+
 As we use gps and https is required by google, you will need to connect to https both webpack server and backend.
 https://localhost:8080
 
