@@ -9,7 +9,7 @@ import io from 'socket.io-client';
 import uuid from 'uuid';
 import config from '../config';
 
-class Chat extends Component {
+export class Chat extends Component {
     componentDidMount(){
         var _this = this,
             serverCfg = config.chat.server,
