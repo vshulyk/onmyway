@@ -14,3 +14,12 @@ https://localhost:3090 and accept this one**
 	> cd server
 	> node index.js
 ```
+
+**Tests
+```
+#Lint: 
+npm run lint
+
+#Coverage
+npm run test:cover
+```

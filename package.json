@@ -6,8 +6,10 @@
   "repository": "git@github.com:StephenGrider/ReduxSimpleStarter.git",
   "scripts": {
     "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
-    "test": "mocha --compilers js:babel-register --require ./test/setup_dom.js --recursive",
-    "test:watch": "npm test -- --watch"
+    "test": "./node_modules/.bin/mocha --compilers js:babel-register --require ./test/setup_dom.js --recursive",
+    "test:watch": "npm test -- --watch",
+    "test:cover": "./node_modules/.bin/nyc --require babel-core/register ./node_modules/.bin/mocha --compilers js:babel-register --require ./test/setup_dom.js --recursive",
+    "lint": "./node_modules/.bin/eslint src"
   },
   "author": "",
   "license": "ISC",
@@ -20,12 +22,15 @@
     "chai": "^3.5.0",
     "chai-jquery": "^2.0.0",
     "enzyme": "^2.4.1",
-    "eslint": "^3.5.0",
+    "eslint": "^3.6.0",
     "eslint-plugin-mocha": "^4.5.1",
+    "eslint-plugin-react": "^6.3.0",
     "expect": "^1.20.2",
+    "istanbul": "^0.4.5",
     "jquery": "^2.2.1",
     "jsdom": "^8.5.0",
     "mocha": "^2.5.3",
+    "nyc": "^8.3.0",
     "react-addons-test-utils": "^0.14.7",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"

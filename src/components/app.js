@@ -6,10 +6,10 @@ import Menu from './menu';
 export default class App extends Component {
     render() {
         return (
-        	<div className="wrapper">
-        		<Menu />
-        		{this.props.children}
-        	</div>
+            <div className="wrapper">
+                <Menu />
+                {this.props.children}
+            </div>
         );
     }
 }

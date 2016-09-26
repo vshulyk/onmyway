@@ -48,16 +48,16 @@ export class TrackingMap extends Component {
         var _this = this,
             teamIcon = divIcon({
                 className: 'vehicle-icon',
-                html: getIcon("/img/u.png", "Friend"),
+                html: getIcon('/img/u.png', 'Friend')
             });
         return Object.keys(_this.props.team).map(function(memberKey, i){
             var member = _this.props.team[memberKey],
                 tIcon = teamIcon;
             if ( !_.get(member, 'meta.status')) {
                 tIcon = divIcon({
-                className: 'vehicle-icon',
-                html: getIcon("/img/dead.png", "Disconnected friend"),
-            });
+                    className: 'vehicle-icon',
+                    html: getIcon('/img/dead.png', 'Disconnected friend')
+                });
             }
             return <Marker className={status} position={[member.lat, member.lng]} key={i} icon={tIcon} title="you" />;
         });
@@ -69,7 +69,7 @@ export class TrackingMap extends Component {
         bounds.push([this.props.gps.lat, this.props.gps.lng]);
         Object.keys(_this.props.team).map(function(memberKey, i){
             var member = _this.props.team[memberKey];
-            bounds.push([member.lat, member.lng])
+            bounds.push([member.lat, member.lng]);
         });
         return bounds;
     }
@@ -79,11 +79,11 @@ export class TrackingMap extends Component {
 
         var myIcon = divIcon({
             className: 'vehicle-icon',
-            html: getIcon("/img/i.png", "ME"),
+            html: getIcon('/img/i.png', 'ME')
         });
-            
+
         return (
-            <Map center={[this.props.gps.lat, this.props.gps.lng]} 
+            <Map center={[this.props.gps.lat, this.props.gps.lng]}
                 zoom={18} bounds={this.getBounds()}
                 boundsOptions={{padding: [50, 50]}}
             >
@@ -110,7 +110,7 @@ TrackingMap.propTypes = {
 };
 
 function getIcon(image, text){
-    return "<div>"+text+"<img src='"+image+"'/></div>";
+    return '<div>'+text+'<img src="'+image+'"/></div>';
 }
 
 function mapStateToProps(state) {

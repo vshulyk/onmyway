@@ -6,9 +6,9 @@ import {
 
 export default function AuthReducer(state = false, action) {
     switch(action.type) {
-    	case AUTHENTICATE:
+    case AUTHENTICATE:
         return action.payload;
-    	default:
+    default:
         return state;
     }
 }

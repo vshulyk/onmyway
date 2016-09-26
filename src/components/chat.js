@@ -23,28 +23,28 @@ class Chat extends Component {
 
         this.socket = io.connect(serverUrl, {secure: true});
         this.socket.emit('chat message', { action: 'connect', payload: {
-            teamId: this.props.teamId, 
-            userId: this.uuid, 
+            teamId: this.props.teamId,
+            userId: this.uuid,
             timestamp: Date.now()
         } });
         this.socket.on('chat message', function(msg){
             switch(msg.action) {
-                case 'connect':
-                    console.log('user connected:', msg.payload.userId);
-                    break;
-                case 'changeCoords':
-                    _this.props.changeTeamCoords(msg.payload);
-                    break;
-                default:
-                    return false;
+            case 'connect':
+                console.log('user connected:', msg.payload.userId);
+                break;
+            case 'changeCoords':
+                _this.props.changeTeamCoords(msg.payload);
+                break;
+            default:
+                return false;
             }
         });
     }
     componentWillReceiveProps(nextProps){
         var userData = Object.assign(
-            nextProps.gps, 
+            nextProps.gps,
             {
-                userId: this.uuid, 
+                userId: this.uuid,
                 timestamp: Date.now(),
                 meta: {
                     status: 1
