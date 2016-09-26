@@ -5,6 +5,8 @@ Build status:
 
 [![CircleCI](https://circleci.com/bb/vshulyk/reduxmapdemo.svg?style=svg&circle-token=ac9ebf6506a224c957a925815b55db360f1fae0c)](https://circleci.com/bb/vshulyk/reduxmapdemo)
 
+Live demo: [https://onmyway.ga](https://onmyway.ga)
+
 As we use gps and https is required by google, you will need to connect to https both webpack server and backend.
 https://localhost:8080
 
