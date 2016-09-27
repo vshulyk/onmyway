@@ -38,7 +38,11 @@ class Menu extends Component {
     }
 }
 
-Menu.propTypes = { children: React.PropTypes.element };
+Menu.propTypes = {
+    children: React.PropTypes.element,
+    authenticated: React.PropTypes.boolean,
+    authenticate: React.PropTypes.function
+};
 
 function mapStateToProps( state ) {
     return {
