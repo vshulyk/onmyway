@@ -3,7 +3,7 @@
 
 Build status:
 
-[![CircleCI](https://circleci.com/bb/vshulyk/onmyway.svg?style=svg&circle-token=ac9ebf6506a224c957a925815b55db360f1fae0c)](https://circleci.com/bb/vshulyk/onmyway)apdemo)
+[![CircleCI](https://circleci.com/bb/vshulyk/onmyway.svg?style=svg&circle-token=ac9ebf6506a224c957a925815b55db360f1fae0c)](https://circleci.com/bb/vshulyk/onmyway)
 
 Live demo: [https://onmyway.ga](https://onmyway.ga)
 
