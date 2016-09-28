@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import { authenticate } from '../actions';
 import { bindActionCreators } from 'redux';
 
-class Menu extends Component {
+export class Menu extends Component {
     renderSignBtn() {
         if ( this.props.authenticated ) {
             return (
@@ -19,7 +19,7 @@ class Menu extends Component {
     }
     render() {
         return (
-            <div className="top-bar">
+            <div className="top-bar" id="Menu">
                 <div className="top-bar-left">
                     <ul className="dropdown menu" data-dropdown-menu>
                         <li className="menu-text">OnMyWay</li>
@@ -39,9 +39,8 @@ class Menu extends Component {
 }
 
 Menu.propTypes = {
-    children: React.PropTypes.element,
-    authenticated: React.PropTypes.boolean,
-    authenticate: React.PropTypes.function
+    authenticated: React.PropTypes.bool,
+    authenticate: React.PropTypes.func
 };
 
 function mapStateToProps( state ) {

@@ -32,7 +32,7 @@ function setup() {
     };
 }
 
-describe('components', () => {
+export default function() {
     describe('Chat', () => {
         it('should call componentWillReceiveProps on gps change', () => {
             const spy = expect.spyOn(Chat.prototype, "componentWillReceiveProps");
@@ -59,4 +59,4 @@ describe('components', () => {
         //     expect(spy).toHaveBeenCalled();
         // });
     });
-});
+}

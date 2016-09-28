@@ -24,7 +24,7 @@ function setup() {
     };
 }
 
-describe('components', () => {
+export default function() {
     describe('TrackingMap', () => {
         it('should render self and subcomponents', () => {
             const { enzymeWrapper } = setup();
@@ -34,4 +34,4 @@ describe('components', () => {
             expect(enzymeWrapper.find('Connect(Chat)').length).toEqual(1);
         });
     });
-});
+}
