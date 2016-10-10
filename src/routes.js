@@ -3,6 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 
 import App from './components/app';
 import Map from './components/map';
+import ReqName from './components/require_name';
 
 function Welcome() {
     return (
@@ -16,6 +17,6 @@ function Welcome() {
 export default (
     <Route component={App}>
         <Route path="/" component={Welcome} />
-        <Route path="/map/:teamId" component={Map} />
+        <Route path="/map/:teamId" component={ReqName(Map)} />
     </Route>
 );

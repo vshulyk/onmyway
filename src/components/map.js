@@ -79,7 +79,7 @@ export class TrackingMap extends Component {
 
         var myIcon = divIcon({
             className: 'vehicle-icon',
-            html: getIcon('/img/i.png', 'ME')
+            html: getIcon('/img/i.png', this.props.username)
         });
 
         return (
@@ -116,7 +116,8 @@ function getIcon(image, text){
 function mapStateToProps(state) {
     return {
         gps: state.gps,
-        team: state.team
+        team: state.team,
+        username: state.username.name
     };
 }
 

@@ -3,6 +3,8 @@
 import {
   CHANGE_COORDS,
   CHANGE_TEAM_COORDS,
+  SET_USER_NAME,
+  SET_USER_VALUE,
   AUTHENTICATE
 } from './types';
 
@@ -28,4 +30,18 @@ export function authenticate( status ) {
         type: AUTHENTICATE,
         payload: status
     };
+}
+
+export function setUserName( name ) {
+    return {
+        type: SET_USER_NAME,
+        payload: name
+    }
+}
+
+export function updateNameValue( v ) {
+    return {
+        type: SET_USER_VALUE,
+        payload: v.target.value
+    }
 }
