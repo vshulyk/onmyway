@@ -1,26 +1,16 @@
 .container, .wrapper {
 	height: 100%;
 }
-.top-bar {
-	position: fixed;
-	width: 100%;
-	z-index: 1;
-}
 .content-wrapper {
-		position: absolute;
-		top: 0;
-		left: 0;
-		box-sizing: border-box;
-		padding-top: 56px;
     height: 100%;
     width: 100%;
 }
 .map, .leaflet-container {
 	height: 100%;
-  width: 100%;
+  	width: 100%;
 }
 .welcome {
 	display: flex;
-  justify-content: center; 
-  align-items: center; 
+  	justify-content: center; 
+  	align-items: center; 
 }

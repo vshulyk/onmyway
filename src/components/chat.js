@@ -22,15 +22,17 @@ export class Chat extends Component {
         }
 
         this.socket = io.connect(serverUrl, {secure: true});
+
         this.socket.emit('chat message', { action: 'connect', payload: {
             teamId: this.props.teamId,
             userId: this.uuid,
+            username: this.props.user.name,
             timestamp: Date.now()
         } });
         this.socket.on('chat message', function(msg){
             switch(msg.action) {
             case 'connect':
-                console.log('user connected:', msg.payload.userId);
+                console.log('user connected:', msg.payload.userId, msg.payload.username);
                 break;
             case 'changeCoords':
                 _this.props.changeTeamCoords(msg.payload);
@@ -45,6 +47,7 @@ export class Chat extends Component {
             nextProps.gps,
             {
                 userId: this.uuid,
+                username: this.props.user.name,
                 timestamp: Date.now(),
                 meta: {
                     status: 1
@@ -73,7 +76,8 @@ Chat.propTypes = {
 
 function mapStateToProps(state) {
     return {
-        gps: state.gps
+        gps: state.gps,
+        user: state.user
     };
 }
 

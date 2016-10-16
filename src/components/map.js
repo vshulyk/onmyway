@@ -46,20 +46,15 @@ export class TrackingMap extends Component {
 
     teamMarkers(){
         var _this = this,
+            teamIcon = null;
+        return Object.keys(_this.props.team).map(function(memberKey, i){
+            var member = _this.props.team[memberKey];
+            const iconPath = !_.get(member, 'meta.status') ? '/img/dead.png' : '/img/u.png';
             teamIcon = divIcon({
                 className: 'vehicle-icon',
-                html: getIcon('/img/u.png', 'Friend')
+                html: getIcon( iconPath, member.username)
             });
-        return Object.keys(_this.props.team).map(function(memberKey, i){
-            var member = _this.props.team[memberKey],
-                tIcon = teamIcon;
-            if ( !_.get(member, 'meta.status')) {
-                tIcon = divIcon({
-                    className: 'vehicle-icon',
-                    html: getIcon('/img/dead.png', 'Disconnected friend')
-                });
-            }
-            return <Marker className={status} position={[member.lat, member.lng]} key={i} icon={tIcon} title="you" />;
+            return <Marker className={status} position={[member.lat, member.lng]} key={i} icon={teamIcon} />;
         });
     }
 
@@ -79,7 +74,7 @@ export class TrackingMap extends Component {
 
         var myIcon = divIcon({
             className: 'vehicle-icon',
-            html: getIcon('/img/i.png', this.props.username)
+            html: getIcon('/img/i.png', this.props.user)
         });
 
         return (
@@ -90,6 +85,7 @@ export class TrackingMap extends Component {
                 <TileLayer url={tileURL} />
                 <Marker position={[this.props.gps.lat, this.props.gps.lng]} icon={myIcon} title="me" />
                 {this.teamMarkers()}
+                {this.props.children}
             </Map>
         );
     }
@@ -117,7 +113,7 @@ function mapStateToProps(state) {
     return {
         gps: state.gps,
         team: state.team,
-        username: state.username.name
+        user: state.user.name
     };
 }
 

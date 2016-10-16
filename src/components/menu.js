@@ -6,6 +6,8 @@ import { Link } from 'react-router';
 import { authenticate } from '../actions';
 import { bindActionCreators } from 'redux';
 
+import { Navbar, Nav, NavItem } from 'react-bootstrap';
+
 export class Menu extends Component {
     renderSignBtn() {
         if ( this.props.authenticated ) {
@@ -17,9 +19,7 @@ export class Menu extends Component {
           <button type="button" className="btn btn-default" onClick={() => this.props.authenticate( true )}>SignIn</button>
       );
     }
-    render() {
-        return (
-            <div className="top-bar" id="Menu">
+            /*<div className="top-bar" id="Menu">
                 <div className="top-bar-left">
                     <ul className="dropdown menu" data-dropdown-menu>
                         <li className="menu-text">OnMyWay</li>
@@ -33,7 +33,20 @@ export class Menu extends Component {
                         <li><button type="button" className="button">Submit</button></li>
                     </ul>
                 </div>
-            </div>
+            </div>*/
+    render() {
+        return (
+            <Navbar>
+                <Navbar.Header>
+                  <Navbar.Brand>
+                    <a href="#">OnMyWay</a>
+                  </Navbar.Brand>
+                </Navbar.Header>
+                <Nav>
+                <Link to="/" className="btn btn-default navbar-btn">Home</Link>
+                <Link to="/map/11" className="btn btn-default navbar-btn">Map</Link>
+                </Nav>
+            </Navbar>
         );
     }
 }

@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
     gps: GPSReducer,
     team: TeamReducer,
     authenticated: AuthReducer,
-    username: UserReducer
+    user: UserReducer
 });
 
 export default rootReducer;

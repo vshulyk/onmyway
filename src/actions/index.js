@@ -5,7 +5,9 @@ import {
   CHANGE_TEAM_COORDS,
   SET_USER_NAME,
   SET_USER_VALUE,
-  AUTHENTICATE
+  AUTHENTICATE,
+  OPEN_USERNAME_MODAL,
+  CLOSE_USERNAME_MODAL
 } from './types';
 
 
@@ -43,5 +45,19 @@ export function updateNameValue( v ) {
     return {
         type: SET_USER_VALUE,
         payload: v.target.value
+    }
+}
+
+export function openUsernameModal() {
+    return {
+        type: OPEN_USERNAME_MODAL,
+        payload: true
+    }
+}
+
+export function closeUsernameModal() {
+    return {
+        type: CLOSE_USERNAME_MODAL,
+        payload: false
     }
 }
