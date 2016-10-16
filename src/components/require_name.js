@@ -14,7 +14,7 @@ export default function ( ComposedComponent ) {
             let uData = this.props.user,
                 name = uData.name || localStorage.getItem('username');
             if ( name ) {
-                this.props.setUserName( name )
+                this.props.setUserName( name );
             } else if ( !uData.modal ) {
                 this.props.openUsernameModal();
             }
@@ -25,20 +25,18 @@ export default function ( ComposedComponent ) {
         submitUserName() {
             const name = this.props.user.value;
             localStorage.setItem('username', name );
-            this.props.setUserName( name )
+            this.props.setUserName( name );
         }
         renderModal() {
-            console.log('render')
             return (
                 <Modal
                   show={this.props.user.modal}
                   onHide={this.props.closeUsernameModal}
                   aria-labelledby="ModalHeader"
                 >
-                  <Modal.Header closeButton>
-                  </Modal.Header>
+                  <Modal.Header closeButton />
                   <Modal.Body>
-                    
+
                     <Form horizontal onSubmit={this.submitUserName}>
                         <FormGroup controlId="formHorizontalEmail">
                           <Col>
@@ -54,20 +52,25 @@ export default function ( ComposedComponent ) {
                     </button>
                   </Modal.Footer>
                 </Modal>
-            )
+            );
         }
 
         render() {
-        	return (
+            return (
                 <ComposedComponent {...this.props}>
                     {!this.props.user.name && this.renderModal()}
                 </ComposedComponent>
-            )
+            );
         }
     }
     UsernameInput.propTypes = {
-        series: React.PropTypes.array
-    }
+        series: React.PropTypes.array,
+        user: React.PropTypes.object,
+        setUserName: React.PropTypes.func,
+        updateNameValue: React.PropTypes.func,
+        openUsernameModal: React.PropTypes.func,
+        closeUsernameModal: React.PropTypes.func
+    };
 
     function mapStateToProps(state) {
         return {

@@ -38,26 +38,26 @@ export function setUserName( name ) {
     return {
         type: SET_USER_NAME,
         payload: name
-    }
+    };
 }
 
 export function updateNameValue( v ) {
     return {
         type: SET_USER_VALUE,
         payload: v.target.value
-    }
+    };
 }
 
 export function openUsernameModal() {
     return {
         type: OPEN_USERNAME_MODAL,
         payload: true
-    }
+    };
 }
 
 export function closeUsernameModal() {
     return {
         type: CLOSE_USERNAME_MODAL,
         payload: false
-    }
+    };
 }

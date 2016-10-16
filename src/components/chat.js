@@ -69,6 +69,7 @@ export class Chat extends Component {
 
 Chat.propTypes = {
     gps: React.PropTypes.object,
+    user: React.PropTypes.object,
     params: React.PropTypes.object,
     teamId: React.PropTypes.string,
     changeTeamCoords: React.PropTypes.func

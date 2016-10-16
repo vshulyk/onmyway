@@ -102,6 +102,11 @@ export class TrackingMap extends Component {
 TrackingMap.propTypes = {
     changeCoords: React.PropTypes.func,
     gps: React.PropTypes.object,
+    user: React.PropTypes.string,
+    children: React.PropTypes.oneOfType([
+        React.PropTypes.element,
+        React.PropTypes.bool
+    ]),
     params: React.PropTypes.object
 };
 
