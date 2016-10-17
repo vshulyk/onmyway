@@ -10,6 +10,7 @@
     "test:watch": "NODE_ENV='development' npm test -- --watch",
     "test:cover": "NODE_ENV='development' ./node_modules/.bin/nyc --require babel-core/register ./node_modules/.bin/mocha --compilers js:babel-register --require ./test/setup_dom.js --recursive",
     "lint": "NODE_ENV='development' ./node_modules/.bin/eslint src",
+    "lint:fix": "NODE_ENV='development' ./node_modules/.bin/eslint src --fix",
     "build": "NODE_ENV='production' ./node_modules/.bin/webpack -p"
   },
   "author": "",
