@@ -5,7 +5,7 @@ from fabric.context_managers import cd
 env.hosts = ['omw-user@onmyway.ga']
 
 def deploy():
-    local("webpack -p")    
+    local("npm run build")    
     put('bundle.js', '/var/www/vhosts/onmyway.ga/htdocs')
     put('index.html', '/var/www/vhosts/onmyway.ga/htdocs')
     put('img', '/var/www/vhosts/onmyway.ga/htdocs')
