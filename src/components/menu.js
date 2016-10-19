@@ -36,7 +36,7 @@ export class Menu extends Component {
             </div>*/
     render() {
         return (
-            <Navbar>
+            <Navbar id="Menu">
                 <Navbar.Header>
                   <Navbar.Brand>
                     <a href="#">OnMyWay</a>

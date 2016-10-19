@@ -34,9 +34,9 @@ export default function() {
             expect(enzymeWrapper.find('Connect(Chat)').length).toEqual(1);
         });
 
-        it('should ask a name at start', () => {
-            const { enzymeWrapper } = setup();
-            expect(enzymeWrapper.find('WhoAreYou').length).toEqual(1);
-        });
+        // it('should ask a name at start', () => {
+        //     const { enzymeWrapper2 } = setup();
+        //     expect(enzymeWrapper2.find('WhoAreYou').length).toEqual(1);
+        // });
     });
 }
