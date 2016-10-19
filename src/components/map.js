@@ -76,10 +76,10 @@ export class TrackingMap extends Component {
             className: 'vehicle-icon',
             html: getIcon('/img/i.png', this.props.user)
         });
-
+        // bounds={this.getBounds()} // should change this! TODO :)
         return (
             <Map center={[this.props.gps.lat, this.props.gps.lng]}
-                zoom={18} bounds={this.getBounds()}
+                zoom={18}
                 boundsOptions={{padding: [50, 50]}}
             >
                 <TileLayer url={tileURL} />

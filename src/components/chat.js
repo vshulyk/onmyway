@@ -21,18 +21,21 @@ export class Chat extends Component {
             localStorage.setItem('uuid', this.uuid);
         }
 
-        this.socket = io.connect(serverUrl, {secure: true});
+        var socket = this.socket = io.connect(serverUrl, {secure: true});
 
-        this.socket.emit('chat message', { action: 'connect', payload: {
+        socket.emit('chat message', { action: 'connect', payload: {
             teamId: this.props.teamId,
             userId: this.uuid,
             username: this.props.user.name,
             timestamp: Date.now()
         } });
-        this.socket.on('chat message', function(msg){
+        socket.emit('startup', {action: 'refactoring are coming'});
+        socket.on('user connected', function(userId){
+            console.log('NEW USER CONNECTED', userId);
+        });
+        socket.on('chat message', function(msg){
             switch(msg.action) {
             case 'connect':
-                console.log('user connected:', msg.payload.userId, msg.payload.username);
                 break;
             case 'changeCoords':
                 _this.props.changeTeamCoords(msg.payload);
@@ -47,7 +50,7 @@ export class Chat extends Component {
             nextProps.gps,
             {
                 userId: this.uuid,
-                username: this.props.user.name,
+                username: nextProps.user.name,
                 timestamp: Date.now(),
                 meta: {
                     status: 1

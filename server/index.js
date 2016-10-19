@@ -52,13 +52,17 @@ io.on('connection', function( socket ) {
     socket.on('disconnect', function() {
         disconnectSocketClient( currentChannel );
     });
+    socket.on('startup', function(msg){
+        console.log('TODO: ',msg)
+    });
+
     socket.on('chat message', function(msg){
-        // console.log('IO: action:    ', msg.action)
         switch(msg.action) {
             case 'connect':
                 currentChannel = msg.payload.teamId;
                 connectSocketClient( currentChannel, msg.payload.userId );
                 subscribeSocketClient( currentChannel, msg.payload.userId, socket );
+                socket.broadcast.emit('user connected', msg.payload.userId );
                 break;
             case 'disconnect':
                 setDisconnectedStatus( currentChannel, msg.payload.userId )
