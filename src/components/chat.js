@@ -23,30 +23,21 @@ export class Chat extends Component {
 
         var socket = this.socket = io.connect(serverUrl, {secure: true});
 
-        socket.emit('chat message', { action: 'connect', payload: {
+        socket.emit('user connected', {
             teamId: this.props.teamId,
             userId: this.uuid,
             username: this.props.user.name,
             timestamp: Date.now()
-        } });
-        socket.emit('startup', {action: 'refactoring are coming'});
-        socket.on('user connected', function(userId){
-            console.log('NEW USER CONNECTED', userId);
         });
-        socket.on('chat message', function(msg){
-            switch(msg.action) {
-            case 'connect':
-                break;
-            case 'changeCoords':
-                _this.props.changeTeamCoords(msg.payload);
-                break;
-            default:
-                return false;
-            }
+
+        socket.on('user update', function(data) {
+            console.log("user update", data.username);
+            _this.props.changeTeamCoords(data);
         });
     }
     componentWillReceiveProps(nextProps){
-        var userData = Object.assign(
+        console.log('componentWillReceiveProps  ', nextProps)
+        var payload = Object.assign(
             nextProps.gps,
             {
                 userId: this.uuid,
@@ -57,10 +48,11 @@ export class Chat extends Component {
                 }
             }
         );
-        this.socket.emit('chat message', {action: 'changeCoords', payload: userData });
+
+        this.socket.emit('user update', payload);
     }
     componentWillUnmount() {
-        this.socket.emit('chat message', {action: 'disconnect', payload: {userId: this.uuid, timestamp: Date.now()} });
+        this.socket.emit('user disconnected', {userId: this.uuid, timestamp: Date.now()});
         this.socket.disconnect();
     }
     render() {
