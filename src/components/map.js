@@ -6,7 +6,10 @@ import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 import { changeCoords } from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import Chat from './chat';
+import UsersList from './usersList';
+
 import { icon } from 'leaflet';
 import { divIcon } from 'leaflet';
 import geolib from 'geolib';
@@ -92,6 +95,7 @@ export class TrackingMap extends Component {
     render() {
         return (
             <div className="content-wrapper">
+                <UsersList />
                 <Chat teamId={this.props.params.teamId} />
                 <div className="map" id="map">{this.map()}</div>
             </div>
