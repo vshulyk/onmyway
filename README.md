@@ -14,7 +14,7 @@ https://localhost:8080
 https://localhost:3090 and accept this one**
 
 ```
-	> git clone git@bitbucket.org:vshulyk/reduxmapdemo.git
+	> git clone git@github.com:vshulyk/onmyway.git  
 	> cd ReduxSimpleStarter
 	> npm install
 	> npm start
