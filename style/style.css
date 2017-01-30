@@ -16,6 +16,16 @@ html, body {
 }
 .welcome {
 	display: flex;
-  	justify-content: center; 
-  	align-items: center; 
+  	justify-content: center;
+  	align-items: center;
 }
+
+.select-target {
+    background-color: #fff;
+    width: auto;
+    cursor: pointer;
+    min-width: 100px;
+    margin-bottom: 10px;
+    height: 30px;
+}
+

@@ -2,55 +2,67 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../actions';
+import { bindActionCreators } from 'redux';
+import { changeTarget } from '../actions';
 
 export class UsersList extends Component {
     constructor( props ) {
-        super( props )
-        this.renderUsersList = this.renderUsersList.bind( this );
-        this.renderUser = this.renderUser.bind( this );
-        this.onUserClick = this.onUserClick.bind( this );
+        super( props );
     }
     renderUsersList() {
         var me = this.props.myData,
             team = this.props.usersData;
-        if ( me.userId ) {
-            var myArr = [ this.renderUser(me.userId, me.username) ],
-                users = Object.keys( this.props.usersData ).map( function( uid ) {
+        if ( me.id ) {
+            var myArr = [ this.renderUser(me.id, me.name) ],
+                users = Object.keys( team ).map( function( uid ) {
                     return this.renderUser(uid, team[ uid ].username);
                 }, this );
             return myArr.concat( users );
         }
-        return [];
+        return '';
     }
     renderUser( uid, uname ) {
         return (
-            <li uid={uid} key={uid} onClick={this.onUserClick} > 
+            <option uid={uid} key={uid} value={uid} >
                 { uname }
-            </li>
+            </option>
         );
     }
-    onUserClick( evt ) {
-        console.log('Map should be centerer to', evt.target.innerHTML);
+    onChangeTarget( evt ) {
+        this.props.changeTarget( evt.target.value );
     }
     render() {
+        if ( !this.props.myData.id ) {
+            let style = {
+                height: '40px',
+                display: 'inline-block'
+            };
+            return <span style={style}>&nbsp;</span>;
+        }
         return (
-            <ul>
-                {this.renderUsersList()}
-            </ul>
+            <select className='select-target' onChange={ ( evt ) => this.onChangeTarget( evt ) }>
+                { this.renderUsersList() }
+            </select>
         );
     }
 }
 
-// UsersList.propTypes = {
-// };
+UsersList.propTypes = {
+    myData: React.PropTypes.object,
+    usersData: React.PropTypes.object,
+    changeTarget: React.PropTypes.func
+};
 
 function mapStateToProps( state ) {
-    // console.log(state)
     return {
-        myData: state.gps,
+        myData: state.user,
         usersData: state.team
     };
 }
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        changeTarget: changeTarget
+    }, dispatch);
+}
 
-export default connect( mapStateToProps, actions )( UsersList );
+export default connect( mapStateToProps, mapDispatchToProps )( UsersList );

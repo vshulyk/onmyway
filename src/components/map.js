@@ -18,7 +18,6 @@ import config from '../config';
 export class TrackingMap extends Component {
     componentDidMount(){
         var _this = this;
-        console.log('Map was initialized for: ', this.props.params.teamId, ' team id.');
         // get initial coords
         navigator.geolocation.getCurrentPosition(function(position) {
             _this.GPSupdate.call(_this, position);
@@ -72,16 +71,29 @@ export class TrackingMap extends Component {
         return bounds;
     }
 
+    getCenter() {
+        let id = this.props.target;
+        if ( id && this.props.user.id !== id ) {
+            let team = this.props.team;
+            for (let k in team ) {
+                if ( k === id ) {
+                    return [ team[k].lat, team[k].lng ];
+                }
+            }
+        };
+        return [ this.props.gps.lat, this.props.gps.lng ];
+    }
+
     map(){
         const tileURL = config.map.url + 'michae1.0jk7gngp' + '/{z}/{x}/{y}.png?access_token=' + config.map.token;
 
         var myIcon = divIcon({
             className: 'vehicle-icon',
-            html: getIcon('/img/i.png', this.props.user)
+            html: getIcon('/img/i.png', this.props.user.name)
         });
         // bounds={this.getBounds()} // should change this! TODO :)
         return (
-            <Map center={[this.props.gps.lat, this.props.gps.lng]}
+            <Map center={this.getCenter()}
                 zoom={18}
                 boundsOptions={{padding: [50, 50]}}
             >
@@ -106,12 +118,14 @@ export class TrackingMap extends Component {
 TrackingMap.propTypes = {
     changeCoords: React.PropTypes.func,
     gps: React.PropTypes.object,
-    user: React.PropTypes.string,
+    user: React.PropTypes.object,
+    team: React.PropTypes.object,
     children: React.PropTypes.oneOfType([
         React.PropTypes.element,
         React.PropTypes.bool
     ]),
-    params: React.PropTypes.object
+    params: React.PropTypes.object,
+    target: React.PropTypes.string
 };
 
 function getIcon(image, text){
@@ -122,7 +136,8 @@ function mapStateToProps(state) {
     return {
         gps: state.gps,
         team: state.team,
-        user: state.user.name
+        user: state.user,
+        target: state.target
     };
 }
 

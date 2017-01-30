@@ -12,12 +12,12 @@ export class Menu extends Component {
     renderSignBtn() {
         if ( this.props.authenticated ) {
             return (
-              <button type="button" className="btn btn-default" onClick={() => this.props.authenticate( false )}>SignOut</button>
-          );
+                <button type="button" className="btn btn-default" onClick={() => this.props.authenticate( false )}>SignOut</button>
+            );
         }
         return (
-          <button type="button" className="btn btn-default" onClick={() => this.props.authenticate( true )}>SignIn</button>
-      );
+            <button type="button" className="btn btn-default" onClick={() => this.props.authenticate( true )}>SignIn</button>
+        );
     }
             /*<div className="top-bar" id="Menu">
                 <div className="top-bar-left">

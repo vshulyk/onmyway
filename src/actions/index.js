@@ -5,9 +5,11 @@ import {
   CHANGE_TEAM_COORDS,
   SET_USER_NAME,
   SET_USER_VALUE,
+  SET_USER_ID,
   AUTHENTICATE,
   OPEN_USERNAME_MODAL,
-  CLOSE_USERNAME_MODAL
+  CLOSE_USERNAME_MODAL,
+  SET_TARGET
 } from './types';
 
 
@@ -41,6 +43,14 @@ export function setUserName( name ) {
     };
 }
 
+export function setUserId( id ) {
+    return {
+        type: SET_USER_ID,
+        payload: id
+    };
+}
+
+
 export function updateNameValue( v ) {
     return {
         type: SET_USER_VALUE,
@@ -59,5 +69,12 @@ export function closeUsernameModal() {
     return {
         type: CLOSE_USERNAME_MODAL,
         payload: false
+    };
+}
+
+export function changeTarget( id ) {
+    return {
+        type: SET_TARGET,
+        payload: id
     };
 }

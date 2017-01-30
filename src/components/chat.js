@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { changeCoords, changeTeamCoords } from '../actions';
+import { changeCoords, changeTeamCoords, setUserId } from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import io from 'socket.io-client';
@@ -19,6 +19,7 @@ export class Chat extends Component {
         if (!this.uuid){
             this.uuid = uuid.v4();
             localStorage.setItem('uuid', this.uuid);
+            this.props.setUserId( this.uuid );
         }
 
         var socket = this.socket = io.connect(serverUrl, {secure: true});
@@ -29,15 +30,13 @@ export class Chat extends Component {
             username: this.props.user.name,
             timestamp: Date.now()
         });
-
         socket.on('user update', function(data) {
-            console.log("user update", data.username);
             _this.props.changeTeamCoords(data);
         });
     }
     componentWillReceiveProps(nextProps){
-        console.log('componentWillReceiveProps  ', nextProps)
         var payload = Object.assign(
+            {},
             nextProps.gps,
             {
                 userId: this.uuid,
@@ -48,7 +47,6 @@ export class Chat extends Component {
                 }
             }
         );
-
         this.socket.emit('user update', payload);
     }
     componentWillUnmount() {
@@ -67,7 +65,8 @@ Chat.propTypes = {
     user: React.PropTypes.object,
     params: React.PropTypes.object,
     teamId: React.PropTypes.string,
-    changeTeamCoords: React.PropTypes.func
+    changeTeamCoords: React.PropTypes.func,
+    setUserId: React.PropTypes.func
 };
 
 function mapStateToProps(state) {
@@ -79,7 +78,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        changeTeamCoords: changeTeamCoords
+        changeTeamCoords: changeTeamCoords,
+        setUserId: setUserId
     }, dispatch);
 }
 
