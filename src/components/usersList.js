@@ -4,11 +4,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { changeTarget } from '../actions';
+import _, { isEmpty } from 'lodash';
 
 export class UsersList extends Component {
-    constructor( props ) {
-        super( props );
-    }
     renderUsersList() {
         var me = this.props.myData,
             team = this.props.usersData;
@@ -16,8 +14,11 @@ export class UsersList extends Component {
             var myArr = [ this.renderUser(me.id, me.name) ],
                 users = Object.keys( team ).map( function( uid ) {
                     return this.renderUser(uid, team[ uid ].username);
-                }, this );
-            return myArr.concat( users );
+                }, this ),
+                all = users.length
+                    ? this.renderUser('all', 'View all')
+                    : [];
+            return myArr.concat( users ).concat( all );
         }
         return '';
     }
@@ -32,7 +33,7 @@ export class UsersList extends Component {
         this.props.changeTarget( evt.target.value );
     }
     render() {
-        if ( !this.props.myData.id ) {
+        if ( !this.props.myData.id || isEmpty( this.props.usersData ) ) {
             let style = {
                 height: '40px',
                 display: 'inline-block'

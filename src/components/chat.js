@@ -1,7 +1,6 @@
 'use strict';
 
 import React, { Component } from 'react';
-import _ from 'lodash';
 import { changeCoords, changeTeamCoords, setUserId } from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';

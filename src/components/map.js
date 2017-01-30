@@ -73,7 +73,7 @@ export class TrackingMap extends Component {
 
     getCenter() {
         let id = this.props.target;
-        if ( id && this.props.user.id !== id ) {
+        if ( id && this.props.user.id !== id && id !== 'all' ) {
             let team = this.props.team;
             for (let k in team ) {
                 if ( k === id ) {
@@ -92,10 +92,19 @@ export class TrackingMap extends Component {
             html: getIcon('/img/i.png', this.props.user.name)
         });
         // bounds={this.getBounds()} // should change this! TODO :)
+        var inputProps = {
+            zoom: 18,
+            boundsOptions: {padding: [50, 50]}
+        };
+
+        if ( this.props.target === 'all' )
+            inputProps.bounds = this.getBounds();
+        else
+            inputProps.center = this.getCenter();
+
         return (
-            <Map center={this.getCenter()}
-                zoom={18}
-                boundsOptions={{padding: [50, 50]}}
+            <Map
+                {...inputProps}
             >
                 <TileLayer url={tileURL} />
                 <Marker position={[this.props.gps.lat, this.props.gps.lng]} icon={myIcon} title="me" />
