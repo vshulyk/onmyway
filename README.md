@@ -10,12 +10,12 @@ Live demo: [https://onmyway.ga](https://onmyway.ga)
 As we use gps and https is required by google, you will need to connect to https both webpack server and backend.
 https://localhost:8080
 
-**To prevent untrasted cert issue, until we will have our own good one, please go to the 
+**To prevent untrasted cert issue, until we will have our own good one, please go to the
 https://localhost:3090 and accept this one**
 
 ```
-	> git clone git@github.com:vshulyk/onmyway.git  
-	> cd ReduxSimpleStarter
+	> git clone git@github.com:vshulyk/onmyway.git
+	> cd onmyway
 	> npm install
 	> npm start
 	> cd server
@@ -25,7 +25,7 @@ https://localhost:3090 and accept this one**
 **Tests**
 
 ```
-#Lint: 
+#Lint:
 npm run lint
 
 #Coverage
