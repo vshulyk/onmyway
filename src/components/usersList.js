@@ -11,18 +11,18 @@ export class UsersList extends Component {
         var me = this.props.myData,
             team = this.props.usersData;
         if ( me.id ) {
-            var myArr = [ this.renderUser(me.id, me.name) ],
+            var myArr = [ this.renderOptionElement(me.id, me.name) ],
                 users = Object.keys( team ).map( function( uid ) {
-                    return this.renderUser(uid, team[ uid ].username);
+                    return this.renderOptionElement(uid, team[ uid ].username);
                 }, this ),
                 all = users.length
-                    ? this.renderUser('all', 'View all')
+                    ? this.renderOptionElement('all', 'View all')
                     : [];
             return myArr.concat( users ).concat( all );
         }
         return '';
     }
-    renderUser( uid, uname ) {
+    renderOptionElement( uid, uname ) {
         return (
             <option uid={uid} key={uid} value={uid} >
                 { uname }

@@ -61,20 +61,24 @@ io.on('connection', function( socket ) {
                         }
                     })
                 }
-            })
+            });
+        redisClient.lrangeAsync( 'CHAT:' + channelName, 0, -1 )
+            .then( function( list ) {
+                list.length && socket.emit( 'chat update', list.map( JSON.parse ), true );
+            } )
     });
 
     // Change coordinate
     socket.on('user update', function( data ) {
         redisClient.hsetAsync(
-            'MEMBERS:' + channelName, 
-            data.userId, 
+            'MEMBERS:' + channelName,
+            data.userId,
             JSON.stringify( data )
         ).then(function() {
             socket.broadcast.emit('user update', data);
         });
     });
-    
+
     // Disconnect user
     socket.on('user disconnected', function(user) {
         users--;
@@ -84,13 +88,21 @@ io.on('connection', function( socket ) {
                     var data = JSON.parse( member );
                     data.meta.status = 0;
                     redisClient.hset(
-                        'MEMBERS:' + channelName, 
-                        user.userId, 
+                        'MEMBERS:' + channelName,
+                        user.userId,
                         JSON.stringify( data )
                     );
                     socket.broadcast.emit('user update', data);
                 }
             })
+    });
+
+    // Change chat
+    socket.on('chat update', function( data ) {
+        redisClient.lpushAsync( 'CHAT:' + channelName, JSON.stringify( data ) )
+            .then( function( leng ) {
+                socket.broadcast.emit('chat update', data);
+        } );
     });
 });
 

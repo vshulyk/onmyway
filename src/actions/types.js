@@ -9,3 +9,4 @@ export const SET_USER_ID = 'set_user_id';
 export const OPEN_USERNAME_MODAL = 'open_username_modal';
 export const CLOSE_USERNAME_MODAL = 'close_username_modal';
 export const SET_TARGET = 'set_target';
+export const CHAT_UPDATE = 'chat_update';

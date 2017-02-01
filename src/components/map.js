@@ -7,8 +7,9 @@ import { changeCoords } from '../actions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import Chat from './chat';
+import ChatService from './chat_service';
 import UsersList from './usersList';
+import Chat from './chat';
 
 import { icon } from 'leaflet';
 import { divIcon } from 'leaflet';
@@ -101,7 +102,6 @@ export class TrackingMap extends Component {
             inputProps.bounds = this.getBounds();
         else
             inputProps.center = this.getCenter();
-
         return (
             <Map
                 {...inputProps}
@@ -117,7 +117,8 @@ export class TrackingMap extends Component {
         return (
             <div className="content-wrapper">
                 <UsersList />
-                <Chat teamId={this.props.params.teamId} />
+                <Chat />
+                <ChatService teamId={this.props.params.teamId} />
                 <div className="map" id="map">{this.map()}</div>
             </div>
         );

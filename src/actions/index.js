@@ -9,7 +9,8 @@ import {
   AUTHENTICATE,
   OPEN_USERNAME_MODAL,
   CLOSE_USERNAME_MODAL,
-  SET_TARGET
+  SET_TARGET,
+  CHAT_UPDATE
 } from './types';
 
 
@@ -78,3 +79,12 @@ export function changeTarget( id ) {
         payload: id
     };
 }
+
+export function chatUpdate( payload, init ) {
+    return {
+        type: CHAT_UPDATE,
+        payload: payload,
+        init: !!init
+    };
+}
+

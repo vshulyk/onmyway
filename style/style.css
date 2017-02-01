@@ -29,3 +29,51 @@ html, body {
     height: 30px;
 }
 
+/* chat */
+.chat {
+    padding-bottom: 10px;
+}
+
+.user-chat-wrapper {
+    display: inline-block;
+    vertical-align: top;
+    height: 100px;
+    width: 50%;
+    border: 1px solid gray;
+    overflow-y: scroll;
+    padding-right: 5px;
+}
+
+.message-wrapper {
+    display: inline-block;
+    vertical-align: top;
+    height: 100px;
+    width: 50%;
+    padding-left: 5px;
+}
+
+.message-wrapper textarea {
+    width: 100%;
+    height: calc( 100% - 30px );
+    resize: none;
+    text-indent: 5px
+}
+
+.message-wrapper input {
+    display: inline-block;
+}
+
+.user-chat-wrapper .user-info {
+    background-color: #d3d3d3;
+    padding: 0 5px;
+}
+
+.user-chat-wrapper .user-info .msg-date {
+    float: right;
+}
+
+.user-chat-wrapper .user-msg {
+    text-indent: 5px
+}
+/*/ chat*/
+
