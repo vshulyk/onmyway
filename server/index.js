@@ -46,10 +46,12 @@ var io = require('socket.io')(server),
 io.on('connection', function( socket ) {
     var users = 0,
         channelName = 'default';
+
     // Connect user
     socket.on('user connected', function( data ) {
         users++;
         channelName = data.teamId;
+        socket.join(channelName);
 
         // socket.broadcast.emit('user connected', {message:'Someone left!', users: users});
         redisClient.hgetallAsync('MEMBERS:' + channelName)
@@ -75,7 +77,7 @@ io.on('connection', function( socket ) {
             data.userId,
             JSON.stringify( data )
         ).then(function() {
-            socket.broadcast.emit('user update', data);
+            socket.broadcast.to(channelName).emit('user update', data);
         });
     });
 
@@ -92,7 +94,7 @@ io.on('connection', function( socket ) {
                         user.userId,
                         JSON.stringify( data )
                     );
-                    socket.broadcast.emit('user update', data);
+                    socket.broadcast.to(channelName).emit('user update', data);
                 }
             })
     });
@@ -101,7 +103,7 @@ io.on('connection', function( socket ) {
     socket.on('chat update', function( data ) {
         redisClient.lpushAsync( 'CHAT:' + channelName, JSON.stringify( data ) )
             .then( function( leng ) {
-                socket.broadcast.emit('chat update', data);
+                socket.broadcast.to(channelName).emit('chat update', data);
         } );
     });
 });
