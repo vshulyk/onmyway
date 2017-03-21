@@ -13,7 +13,8 @@ function setup() {
             lat: 50,
             lng: 30
         },
-        team: {}
+        team: {},
+        user: {}
     };
 
     const enzymeWrapper = shallow(<TrackingMap {...props} />);
@@ -31,7 +32,7 @@ export default function() {
             expect(enzymeWrapper.find('Map').length).toEqual(1);
             expect(enzymeWrapper.find('TileLayer').length).toEqual(1);
             expect(enzymeWrapper.find('Marker').length).toEqual(1);
-            expect(enzymeWrapper.find('Connect(Chat)').length).toEqual(1);
+            expect(enzymeWrapper.find('Connect(ChatService)').length).toEqual(1);
         });
 
         // it('should ask a name at start', () => {

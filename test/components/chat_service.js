@@ -1,7 +1,7 @@
 import expect from 'expect';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
-import connectedChat, { Chat } from '../../src/components/chat';
+import connectedChat, { ChatService } from '../../src/components/chat_service';
 
 function setup() {
     const props = {
@@ -16,10 +16,10 @@ function setup() {
         team: {}
     };
 
-    const enzymeWrapper = shallow(<Chat {...props} />);
+    const enzymeWrapper = shallow(<ChatService {...props} />);
 
-    
-   
+
+
     enzymeWrapper.socket = {
         emit: function(){console.log('called')}
     }
@@ -33,11 +33,11 @@ function setup() {
 }
 
 export default function() {
-    describe('Chat', () => {
+    describe('ChatService', () => {
         it('should call componentWillReceiveProps on gps change', () => {
-            const spy = expect.spyOn(Chat.prototype, "componentWillReceiveProps");
+            const spy = expect.spyOn(ChatService.prototype, "componentWillReceiveProps");
             const { enzymeWrapper } = setup();
-            enzymeWrapper.setProps({ 
+            enzymeWrapper.setProps({
                 gps : {
                     lat: 55,
                     lng: 31
@@ -49,7 +49,7 @@ export default function() {
         //     const { enzymeWrapper } = setup();
         //     const spy = expect.spyOn(enzymeWrapper.socket, "emit");
         //     // enzymeWrapper.update()
-        //     enzymeWrapper.setProps({ 
+        //     enzymeWrapper.setProps({
         //         gps : {
         //             lat: 52,
         //             lng: 32
